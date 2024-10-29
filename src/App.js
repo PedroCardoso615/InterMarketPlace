@@ -1,23 +1,59 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import { collection, onSnapshot, query} from 'firebase/firestore';
+
+import db from './firebase';
+
 import './App.css';
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  const productsCollectionRef = collection(db, 'products');
+
+  // One Time get function (needs refresh)
+  // useEffect(() => {
+  //   const getproducts = async () => {
+  //     const querySnapshot = await getDocs(productsCollectionRef);
+
+  //     const items = [];
+  //     querySnapshot.forEach((doc) => {
+  //       items.push(doc.data());
+  //     });
+  //     setproducts(items);
+  //   };
+  //   getproducts();
+  // }, []);
+
+
+  // Real Time Get Function
+  useEffect (() => {
+    const unsubscribe = onSnapshot(
+      query(productsCollectionRef),
+      (querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        setProducts(items);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, [productsCollectionRef]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Products</h1>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name} - {product.price} - {product.hasPic ? 'Has a Picture' : 'No Picture'} - {product.yearPro}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
