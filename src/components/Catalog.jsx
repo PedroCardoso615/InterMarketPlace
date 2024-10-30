@@ -1,6 +1,6 @@
 import React from 'react';
-import useFirestore from './hooks/useFirestore';
-import './App.css';
+import useFirestore from '../hooks/useFirestore';
+import Navbar from './Navbar';
 
 function Catalog() {
   const products = useFirestore('products');
@@ -8,6 +8,9 @@ function Catalog() {
 
   return (
     <div>
+        <>
+            <Navbar />
+        </>
       <h1>Products</h1>
       <ul>
         {products.map((product) => (
