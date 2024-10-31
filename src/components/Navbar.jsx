@@ -10,7 +10,7 @@ function Navbar() {
             </div>
             <nav className={styles.navbar}>
                 <ul className={styles.navul}>
-                    <Link to="/home" className={styles.navli}>Home</Link>
+                    <Link to="/" className={styles.navli}>Home</Link>
                     <Link to="/catalog" className={styles.navli}>Catalog</Link>
                     <Link to="/listing" className={styles.navli}>Listing</Link>
                     <Link to="/profile" className={styles.navli}>Profile</Link>
