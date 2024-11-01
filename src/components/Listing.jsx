@@ -1,4 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
+// import { getStorage } from "firebase/storage";
+// import db from "../firebase";
+
+import { storage, db } from "../firebase";
 
 export const Listing = () => {
 
@@ -6,7 +10,7 @@ export const Listing = () => {
   const [productDescription, setProductDescription] = useState('');
   const [productPrice, setProductPrice] = useState(0);
   const [productCategory, setProductCategory] = useState('');
-  const [productImg, setProductImg] = useState('');
+  const [productImg, setProductImg] = useState(null);
   const [error, setError] = useState('');
 
   const types = ['image/png', 'image/jpeg'];
@@ -25,7 +29,32 @@ export const Listing = () => {
 
   const addProduct = (e) => {
     e.preventDefault();
-    console.log(productName, productDescription, productPrice, productCategory, productImg);
+    // console.log(productName, productDescription, productPrice, productCategory, productImg);
+    const uploadTask = storage.ref(`product-images/${productImg.name}`).put(productImg);
+    uploadTask.on('state-changed', snapshot => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(progress);
+    }, err => {
+      setError(err.message)
+    }, () => {
+      storage.ref('product-images').child(productImg.name).getDownloadURL().then(url => {
+        db.collection('Products').add({
+          productName: productName,
+          productDescription: productDescription,
+          productCategory: productCategory,
+          productPrice: Number(productPrice),
+          productImg: url
+        }).then(() => {
+          setProductName('');
+          setProductDescription('');
+          setProductCategory('');
+          setProductPrice(0);
+          setProductImg('');
+          setError('');
+          document.getElementById('file').value = '';
+        }).catch(err=>setError(err.message));
+      })
+    })
   }
 
   return (
@@ -152,14 +181,16 @@ export const Listing = () => {
         <br />
         <input 
         type="file" 
-        className="form-control"  
+        className="form-control"
+        id="file"  
         required 
         onChange={productImgHandler}
         />
+        {error && <span>{error}</span>}
+        <br />
         <br />
         <button className="btn btn-success butn-md list-btn">List Product</button>
       </form>
-      {error && <span>{error}</span>}
     </div>
   );
 }
