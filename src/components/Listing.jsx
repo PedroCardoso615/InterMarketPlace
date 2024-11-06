@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { db, auth, storage } from "../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { db, auth } from "../firebase";
+// import { ref, uploadBytes } from "firebase/storage";
 
 
 export const Listing = () => {
@@ -10,7 +10,7 @@ export const Listing = () => {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductPrice, setNewProductPrice] = useState(0);
   const [newProductCategory, setNewProductCategory] = useState("");
-  const [newProductImg, setNewProductImg] = useState(null);
+  // const [newProductImg, setNewProductImg] = useState(null);
 
   const productsCollectionRef = collection(db, "products");
 
