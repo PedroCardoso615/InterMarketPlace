@@ -1,61 +1,47 @@
 import React, { useState } from "react";
-// import { getStorage } from "firebase/storage";
-// import db from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { db, auth, storage } from "../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
-import { storage, db } from "../firebase";
 
 export const Listing = () => {
 
-  const [productName, setProductName] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [productPrice, setProductPrice] = useState(0);
-  const [productCategory, setProductCategory] = useState('');
-  const [productImg, setProductImg] = useState(null);
-  const [error, setError] = useState('');
+  const [newProductName, setNewProductName] = useState("");
+  const [newProductDescription, setNewProductDescription] = useState("");
+  const [newProductPrice, setNewProductPrice] = useState(0);
+  const [newProductCategory, setNewProductCategory] = useState("");
+  const [newProductImg, setNewProductImg] = useState(null);
 
-  const types = ['image/png', 'image/jpeg'];
+  const productsCollectionRef = collection(db, "products");
 
-  const productImgHandler = (e) => {
-    let selectedFile = e.target.files[0];
-    if(selectedFile && types.includes(selectedFile.type)) {
-      setProductImg(selectedFile);
-      setError('');
-    }
-    else {
-      setProductImg(null);
-      setError('Please select a valid image format (PNG or JPEG)');
-    }
-  }
+  const listProduct = async () => {
+    try {
+      await addDoc(productsCollectionRef, {
+      name: newProductName, 
+      description: newProductDescription, 
+      price: newProductPrice, 
+      category: newProductCategory,
+      userId: auth?.currentUser?.uid,
+    });
+   } catch(err) {
+    console.error(err);
+   }
+  };
 
-  const addProduct = (e) => {
-    e.preventDefault();
-    // console.log(productName, productDescription, productPrice, productCategory, productImg);
-    const uploadTask = storage.ref(`product-images/${productImg.name}`).put(productImg);
-    uploadTask.on('state-changed', snapshot => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(progress);
-    }, err => {
-      setError(err.message)
-    }, () => {
-      storage.ref('product-images').child(productImg.name).getDownloadURL().then(url => {
-        db.collection('Products').add({
-          productName: productName,
-          productDescription: productDescription,
-          productCategory: productCategory,
-          productPrice: Number(productPrice),
-          productImg: url
-        }).then(() => {
-          setProductName('');
-          setProductDescription('');
-          setProductCategory('');
-          setProductPrice(0);
-          setProductImg('');
-          setError('');
-          document.getElementById('file').value = '';
-        }).catch(err=>setError(err.message));
-      })
-    })
-  }
+  // const uploadImage = async () => {
+  //   if (!newProductImg) return;
+  //   const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
+  //   try {
+  //     await uploadBytes(imageFolderRef, newProductImg);
+  //   } catch(err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // const uploadForm = async () => {
+  //   await listProduct();
+  //   await uploadImage();
+  // };
 
   return (
     <div className="container">
@@ -64,15 +50,14 @@ export const Listing = () => {
         <b>List Your Product</b>
       </h2>
       <hr />
-      <form autoComplete="off" className="form-group" onSubmit={addProduct}>
+      <form autoComplete="off" className="form-group">
         <label htmlFor="product-name">Product Name</label>
         <br />
         <input 
         type="text" 
         className="form-control" 
-        required 
-        onChange={(e)=>setProductName(e.target.value)} 
-        value={productName}
+        required
+        onChange={(e) => setNewProductName(e.target.value)}
         />
         <br />
         <label htmlFor="product-description">Description</label>
@@ -80,9 +65,8 @@ export const Listing = () => {
         <input 
         type="text" 
         className="form-control" 
-        required 
-        onChange={(e)=>setProductDescription(e.target.value)} 
-        value={productDescription}
+        required
+        onChange={(e) => setNewProductDescription(e.target.value)}
         />
         <br />
         <label htmlFor="product-price">Price</label>
@@ -90,9 +74,8 @@ export const Listing = () => {
         <input 
         type="number" 
         className="form-control" 
-        required 
-        onChange={(e)=>setProductPrice(e.target.value)} 
-        value={productPrice}
+        required
+        onChange={(e) => setNewProductPrice(Number(e.target.value))}
         />
         <br />
         <label htmlFor="product-category">Category</label>
@@ -100,8 +83,7 @@ export const Listing = () => {
         <select 
         className="form-control"
         required
-        onChange={(e) => setProductCategory(e.target.value)}
-        value={productCategory}
+        onChange={(e) => setNewProductCategory(e.target.value)}
         >
           <option value='' disabled>Choose category</option>
           <optgroup label="Carros, Motas e Barcos">
@@ -179,20 +161,15 @@ export const Listing = () => {
           </optgroup>
         </select>
         <br />
-        <input 
+        {/* <input 
         type="file" 
         className="form-control"
-        id="file"  
-        required 
-        onChange={productImgHandler}
-        />
-        {error && <span>{error}</span>}
+        required
+        onChange={(e) => setNewProductImg(e.target.files[0])}
+        /> */}
         <br />
-        <br />
-        <button className="btn btn-success butn-md list-btn">List Product</button>
+        <button className="btn btn-success butn-md list-btn" onClick={listProduct}>List Product</button>
       </form>
     </div>
   );
 }
-
-export default Listing;

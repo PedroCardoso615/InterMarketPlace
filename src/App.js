@@ -4,8 +4,10 @@ import Navbar from './components/Navbar';
 
 import Home from './components/Home'
 import Catalog from './components/Catalog';
-import Listing from './components/Listing';
+import {Listing} from './components/Listing';
 import Profile from './components/Profile';
+import {Signup} from './components/Signup';
+import {Login} from './components/Login';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/listing" element={<Listing />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Login />} />
       </Routes>
     </Router>
   );

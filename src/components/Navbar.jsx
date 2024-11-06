@@ -22,6 +22,8 @@ function Navbar() {
                 <Link to="/login" className={styles.nav_acc}>Login</Link>
             </div>
         </header>
+
+        
       );
 }
 
