@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { getDocs, collection, deleteDoc, doc, } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 
 function Catalog() {
@@ -25,10 +25,10 @@ function Catalog() {
     getProductList();
   }, [productsCollectionRef]);
 
-  const deleteProduct = async (id) => {
-    const productDoc = doc(db, "products", id);
-    await deleteDoc(productDoc);
-  };
+  // const deleteProduct = async (id) => {
+  //   const productDoc = doc(db, "products", id);
+  //   await deleteDoc(productDoc);
+  // };
 
   return (
     <div>
@@ -40,7 +40,7 @@ function Catalog() {
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p>{product.price}€</p>
-          <button onClick={() => deleteProduct(product.id)}>Delete</button>
+          {/* <button onClick={() => deleteProduct(product.id)}>Delete</button> */}
           </div>
       ))}
     </div>
