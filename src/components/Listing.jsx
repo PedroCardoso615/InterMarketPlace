@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
-import { db, auth } from "../firebase";
-// import { ref, uploadBytes } from "firebase/storage";
+import { db, auth, storage } from "../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 
 export const Listing = () => {
@@ -10,7 +10,7 @@ export const Listing = () => {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductPrice, setNewProductPrice] = useState(0);
   const [newProductCategory, setNewProductCategory] = useState("");
-  // const [newProductImg, setNewProductImg] = useState(null);
+  const [newProductImg, setNewProductImg] = useState(null);
 
   const productsCollectionRef = collection(db, "products");
 
@@ -28,15 +28,15 @@ export const Listing = () => {
    }
   };
 
-  // const uploadImage = async () => {
-  //   if (!newProductImg) return;
-  //   const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
-  //   try {
-  //     await uploadBytes(imageFolderRef, newProductImg);
-  //   } catch(err) {
-  //     console.error(err);
-  //   }
-  // };
+  const uploadImage = async () => {
+    if (!newProductImg) return;
+    const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
+    try {
+      await uploadBytes(imageFolderRef, newProductImg);
+    } catch(err) {
+      console.error(err);
+    }
+  };
 
   // const uploadForm = async () => {
   //   await listProduct();
@@ -161,14 +161,14 @@ export const Listing = () => {
           </optgroup>
         </select>
         <br />
-        {/* <input 
+        <input 
         type="file" 
         className="form-control"
         required
         onChange={(e) => setNewProductImg(e.target.files[0])}
-        /> */}
+        />
         <br />
-        <button className="btn btn-success butn-md list-btn" onClick={listProduct}>List Product</button>
+        <button className="btn btn-success butn-md list-btn" onClick={listProduct && uploadImage}>List Product</button>
       </form>
     </div>
   );
