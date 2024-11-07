@@ -33,7 +33,10 @@ function Catalog() {
   return (
     <div>
       {productList.map((product) => (
-        <div>
+        <div key={product.id} className='product-card'>
+          {product.imageUrl && (
+            <img src={product.imageUrl} alt={product.name} style={{ width: "200px", height: "auto" }} />
+          )}
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p>{product.price}€</p>
