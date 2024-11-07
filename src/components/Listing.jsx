@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, auth, storage } from "../firebase";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 export const Listing = () => {
@@ -14,34 +14,46 @@ export const Listing = () => {
 
   const productsCollectionRef = collection(db, "products");
 
-  const listProduct = async () => {
+  const handleListProduct = async () => {
     try {
-      await addDoc(productsCollectionRef, {
-      name: newProductName, 
-      description: newProductDescription, 
-      price: newProductPrice, 
-      category: newProductCategory,
-      userId: auth?.currentUser?.uid,
-    });
-   } catch(err) {
-    console.error(err);
-   }
-  };
+      //Process the image upload
+      let imageUrl = "";
+      if (newProductImg) {
+        const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
+        await uploadBytes(imageFolderRef, newProductImg);
+        imageUrl = await getDownloadURL(imageFolderRef);
+      }
 
-  const uploadImage = async () => {
-    if (!newProductImg) return;
-    const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
-    try {
-      await uploadBytes(imageFolderRef, newProductImg);
+      //Product upload to Firestore
+      await addDoc(productsCollectionRef, {
+        name: newProductName,
+        description: newProductDescription,
+        price: newProductPrice,
+        category: newProductCategory,
+        userId: auth?.currentUser?.uid,
+        imageUrl: imageUrl,
+      });
+
+      setNewProductName("");
+      setNewProductDescription("");
+      setNewProductPrice(0);
+      setNewProductCategory("");
+      setNewProductImg(null);
     } catch(err) {
       console.error(err);
     }
   };
 
-  // const uploadForm = async () => {
-  //   await listProduct();
-  //   await uploadImage();
-  // };
+  //Process only JPG, JPG AND PNG
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && ["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+      setNewProductImg(file);
+    } else {
+      alert("Please upload an image file (JPG, JPEG, PNG).");
+      setNewProductImg(null);
+    }
+  };
 
   return (
     <div className="container">
@@ -50,13 +62,14 @@ export const Listing = () => {
         <b>List Your Product</b>
       </h2>
       <hr />
-      <form autoComplete="off" className="form-group">
+      <form autoComplete="off" className="form-group" onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="product-name">Product Name</label>
         <br />
         <input 
         type="text" 
         className="form-control" 
         required
+        value={newProductName}
         onChange={(e) => setNewProductName(e.target.value)}
         />
         <br />
@@ -66,6 +79,7 @@ export const Listing = () => {
         type="text" 
         className="form-control" 
         required
+        value={newProductDescription}
         onChange={(e) => setNewProductDescription(e.target.value)}
         />
         <br />
@@ -75,7 +89,8 @@ export const Listing = () => {
         type="number" 
         className="form-control" 
         required
-        onChange={(e) => setNewProductPrice(Number(e.target.value))}
+        value={newProductPrice}
+        onChange={(e) => setNewProductPrice(Number(e.target.value) || 0)}
         />
         <br />
         <label htmlFor="product-category">Category</label>
@@ -83,9 +98,10 @@ export const Listing = () => {
         <select 
         className="form-control"
         required
+        value={newProductCategory}
         onChange={(e) => setNewProductCategory(e.target.value)}
         >
-          <option value='' disabled>Choose category</option>
+          <option value="" disabled>Choose category</option>
           <optgroup label="Carros, Motas e Barcos">
             <option>Carros</option>
             <option>Motas</option>
@@ -164,11 +180,12 @@ export const Listing = () => {
         <input 
         type="file" 
         className="form-control"
+        accept=".png, .jpeg, .jpg"
         required
-        onChange={(e) => setNewProductImg(e.target.files[0])}
+        onChange={handleFileChange}
         />
         <br />
-        <button className="btn btn-success butn-md list-btn" onClick={listProduct && uploadImage}>List Product</button>
+        <button className="btn btn-success butn-md list-btn" onClick={handleListProduct}>List Product</button>
       </form>
     </div>
   );
