@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, auth, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -13,6 +13,7 @@ export const Listing = () => {
   const [newProductImg, setNewProductImg] = useState(null);
 
   const productsCollectionRef = collection(db, "products");
+  const fileInputClear = useRef(null);
 
   const handleListProduct = async () => {
     try {
@@ -39,6 +40,8 @@ export const Listing = () => {
       setNewProductPrice(0);
       setNewProductCategory("");
       setNewProductImg(null);
+      fileInputClear.current.value = "";
+      alert("Product listed successfully!");
     } catch(err) {
       console.error(err);
     }
@@ -51,6 +54,7 @@ export const Listing = () => {
       setNewProductImg(file);
     } else {
       alert("Please upload an image file (JPG, JPEG, PNG).");
+      e.target.value = ""; //If the file type is invalid the input is cleared.
       setNewProductImg(null);
     }
   };
@@ -180,7 +184,7 @@ export const Listing = () => {
         <input 
         type="file" 
         className="form-control"
-        accept=".png, .jpeg, .jpg"
+        ref={fileInputClear}
         required
         onChange={handleFileChange}
         />
@@ -189,4 +193,4 @@ export const Listing = () => {
       </form>
     </div>
   );
-}
+};
