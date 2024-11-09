@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import styles from '../css/Navbar.module.css';
-import logo from '../images/ReactInv3.png';
+import logo from '../images/IMPInv.png';
 
 function Navbar() {
   const [user, setUser] = useState(null);
@@ -33,7 +33,9 @@ function Navbar() {
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
+        <a href='/home'>
         <img className={styles.logo_detail} src={logo} alt="Logo" />
+        </a>
       </div>
       <nav className={styles.navbar}>
         <ul className={styles.navul}>

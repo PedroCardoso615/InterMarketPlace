@@ -81,8 +81,7 @@ import styles from '../css/Catalog.module.css';
 function Catalog() {
   const [productList, setProductList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState(''); // Sorting criteria
-  const [filterCategory, setFilterCategory] = useState(''); // Category filter
+  const [sortOption, setSortOption] = useState('');
 
   const productsPerPage = 8;
   const productsCollectionRef = collection(db, "products");
@@ -105,7 +104,6 @@ function Catalog() {
 
   // Sort products based on selected sort option
   const sortedProducts = [...productList]
-    .filter((product) => !filterCategory || product.category === filterCategory) // Apply category filter if selected
     .sort((a, b) => {
       switch (sortOption) {
         case 'price-asc':
@@ -133,7 +131,6 @@ function Catalog() {
 
   return (
     <div>
-      {/* Filter and Sort Options */}
       <div className={styles.filter_sort_container}>
         <select onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
           <option value="">Sort by</option>
@@ -144,7 +141,6 @@ function Catalog() {
         </select>
       </div>
 
-      {/* Display Products */}
       <div className={styles.catalog_container}>
         {currentProducts.map((product) => (
           <div key={product.id} className={styles.product_card}>
@@ -159,7 +155,6 @@ function Catalog() {
         ))}
       </div>
 
-      {/* Pagination Bar */}
       <div className={styles.pagination_bar}>
         {[...Array(totalPages)].map((_, index) => (
           <button
