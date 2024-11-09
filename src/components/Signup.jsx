@@ -24,9 +24,9 @@ export const Signup = () => {
       await setDoc(doc(db, 'users', user.uid), {
         username: username,
         email: email,
+        password: password,
       });
 
-      // Redirect to home or dashboard
       navigate('/home'); // Redirect to home page
     } catch (err) {
       setError(err.message);

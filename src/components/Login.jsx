@@ -17,7 +17,7 @@ export const Login = () => {
       // Redirect to home
       navigate('/home');
     } catch (err) {
-      setError(err.message);
+      setError("As credenciais fornecidas não correspondem aos nossos registros.");
     }
   };
 

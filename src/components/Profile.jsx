@@ -114,7 +114,7 @@ function Profile() {
     };
 
     fetchUserData();
-  }, []); // Only run this effect once on component mount
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -122,7 +122,7 @@ function Profile() {
       console.log('User logged out');
       
       // Redirect to the login page after logging out
-      navigate('/login'); // Assuming your login page is at '/login'
+      navigate('/login');
     } catch (err) {
       setError('Failed to log out');
       console.error(err);
@@ -138,7 +138,6 @@ function Profile() {
         await updateDoc(docRef, { username: newUsername }); // Update Firestore with the new username
         setUserData((prevData) => ({ ...prevData, username: newUsername }));
         
-        // Display the confirmation message
         setConfirmationMessage('Username updated successfully!');
         setIsSuccess(true);
         
@@ -156,7 +155,7 @@ function Profile() {
     }
   };
 
-  if (loading) return <div>Loading...</div>; // Display a loading message while data is being fetched
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div style={{ position: 'relative' }}>
@@ -181,6 +180,9 @@ function Profile() {
           <ul>
             {userProducts.map((product, index) => (
               <li key={index}>
+                {product.imageUrl && (
+            <img src={product.imageUrl} alt={product.name} style={{ width: "200px", height: "auto" }} />
+          )}
                 <p>{product.name}</p>
                 <p>{product.description}</p>
                 <p>Price: ${product.price}</p>

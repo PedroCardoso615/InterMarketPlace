@@ -18,7 +18,6 @@ function Navbar() {
     return () => unsubscribe();
   }, []);
 
-  // Handle click on user icon
   const handleUserIconClick = () => {
     if (user) {
       navigate('/profile'); // Redirect to profile if user is logged in
@@ -41,7 +40,6 @@ function Navbar() {
           <Link to="/" className={styles.navli}>Home</Link>
           <Link to="/catalog" className={styles.navli}>Catalog</Link>
           <Link to="/listing" className={styles.navli}>Listing</Link>
-          <Link to="/signup" className={styles.navli}>Signup</Link>
         </ul>
       </nav>
       <div className={styles.nav_right}>
