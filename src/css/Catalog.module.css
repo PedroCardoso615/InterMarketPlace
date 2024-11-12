@@ -54,7 +54,7 @@
   border: 4px solid #0066cc;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.5s;
   width: 100%;
 }
 
@@ -81,7 +81,8 @@
 }
 
 .pagination_bar button:hover {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
+  color: #0066cc;
 }
 
 .pagination_bar .active {
@@ -90,12 +91,12 @@
   border-color: #0066cc;
 }
 
-.filter_sort_container {
+.filter_container {
     margin: 20px 0;
     padding: 0 20px;
   }
   
-  .filter_sort_container select {
+  .filter_container select {
     padding: 8px;
     font-size: 16px;
     border-radius: 4px;

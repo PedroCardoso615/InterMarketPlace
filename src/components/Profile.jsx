@@ -1,72 +1,13 @@
-// import React, { useEffect, useState } from 'react';
-// import { auth } from '../firebase';
-// import { getFirestore, doc, getDoc } from 'firebase/firestore';
-// import { signOut } from 'firebase/auth';
-
-// const db = getFirestore();
-
-// function Profile() {
-//   const [userData, setUserData] = useState(null);
-//   const [error, setError] = useState('');
-
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const user = auth.currentUser; // Get the currently logged-in user
-//         if (user) {
-//           const docRef = doc(db, 'users', user.uid);
-//           const docSnap = await getDoc(docRef);
-          
-//           if (docSnap.exists()) {
-//             setUserData(docSnap.data()); // Set user data to state
-//           } else {
-//             console.log('No such document!');
-//           }
-//         }
-//       } catch (err) {
-//         setError('Failed to retrieve user data');
-//         console.error(err);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, []); // Only run this effect once on component mount
-
-//   const handleLogout = async () => {
-//     try {
-//       await signOut(auth); // Log out the user
-//       console.log('User logged out');
-//       // Optionally, you can redirect the user to another page after logging out
-//     } catch (err) {
-//       setError('Failed to log out');
-//       console.error(err);
-//     }
-//   };
-
-//   if (!userData) return <div>Loading...</div>; // Display a loading message while data is being fetched
-
-//   return (
-//     <div>
-//       <h2>User Profile</h2>
-//       {error && <p>{error}</p>}
-//       <p>Username: {userData.username}</p>
-//       <p>Email: {userData.email}</p>
-//       <button onClick={handleLogout}>Log Out</button>
-//     </div>
-//   );
-// }
-
-// export default Profile;
-
 import React, { useEffect, useState } from 'react';
 import { auth } from '../firebase';
-import { getFirestore, doc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc, deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
+import styles from '../css/Catalog.module.css'; // Import the styles
 
 const db = getFirestore();
 
-function Profile() {
+export const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [error, setError] = useState('');
@@ -75,33 +16,32 @@ function Profile() {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const user = auth.currentUser;
         if (user) {
-          // Fetch user data
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
           
           if (docSnap.exists()) {
             setUserData(docSnap.data());
-            setNewUsername(docSnap.data().username); // Set current username as initial value
+            setNewUsername(docSnap.data().username);
           } else {
             console.log('No such document!');
           }
           
-          // Fetch products added by the user
+          // Get the products listed by the user
           const productsQuery = query(
             collection(db, 'products'),
-            where('userId', '==', user.uid)  // Assuming 'userId' or 'uid' is a field in your products collection
+            where('userId', '==', user.uid)
           );
           const querySnapshot = await getDocs(productsQuery);
           const products = [];
           querySnapshot.forEach((doc) => {
-            products.push(doc.data());
+            products.push({ ...doc.data(), id: doc.id });
           });
           setUserProducts(products);
         }
@@ -116,12 +56,10 @@ function Profile() {
     fetchUserData();
   }, []);
 
+  // Logout button
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the user
-      console.log('User logged out');
-      
-      // Redirect to the login page after logging out
+      await signOut(auth);
       navigate('/login');
     } catch (err) {
       setError('Failed to log out');
@@ -129,25 +67,24 @@ function Profile() {
     }
   };
 
+  // Username change
   const handleUsernameChange = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
     if (user && newUsername !== userData.username) {
       try {
         const docRef = doc(db, 'users', user.uid);
-        await updateDoc(docRef, { username: newUsername }); // Update Firestore with the new username
+        await updateDoc(docRef, { username: newUsername });
         setUserData((prevData) => ({ ...prevData, username: newUsername }));
         
         setConfirmationMessage('Username updated successfully!');
         setIsSuccess(true);
         
-        // Hide the confirmation message after 3 seconds
         setTimeout(() => {
           setConfirmationMessage('');
           setIsSuccess(false);
         }, 3000);
         
-        console.log('Username updated');
       } catch (err) {
         setError('Failed to update username');
         console.error(err);
@@ -155,13 +92,43 @@ function Profile() {
     }
   };
 
+  // Delete uploaded products
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await deleteDoc(doc(db, 'products', productId));
+      setUserProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
+      setConfirmationMessage('Product deleted successfully!');
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        setConfirmationMessage('');
+        setIsSuccess(false);
+      }, 3000);
+    } catch (err) {
+      setError('Failed to delete product');
+      console.error(err);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ position: 'relative' }}>
-      <h2>User Profile</h2>
-      {error && <p>{error}</p>}
-      <p>Email: {userData.email}</p>
+    <div>
+      {error && (
+        <div>
+          {error}
+        </div>
+      )}
+
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="text"
+          id="email"
+          value={userData.email}
+          readOnly
+        />
+      </div>
 
       <div>
         <label htmlFor="username">Username:</label>
@@ -176,49 +143,45 @@ function Profile() {
 
       <div>
         <h3>Your Products</h3>
-        {userProducts.length > 0 ? (
-          <ul>
-            {userProducts.map((product, index) => (
-              <li key={index}>
+        <div className={styles.catalog_container}>
+          {userProducts.length > 0 ? (
+            userProducts.map((product) => (
+              <div key={product.id} className={styles.product_card}>
                 {product.imageUrl && (
-            <img src={product.imageUrl} alt={product.name} style={{ width: "200px", height: "auto" }} />
-          )}
-                <p>{product.name}</p>
+                  <img src={product.imageUrl} alt={product.name} />
+                )}
+                <h1>{product.name}</h1>
                 <p>{product.description}</p>
-                <p>Price: ${product.price}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You haven't added any products yet.</p>
-        )}
+                <p>{product.price}€</p>
+                <button onClick={() => handleDeleteProduct(product.id)}>Delete Product</button>
+              </div>
+            ))
+          ) : (
+            <p>You haven't added any products yet.</p>
+          )}
+        </div>
       </div>
 
       <button onClick={handleLogout}>Log Out</button>
 
-      {/* Confirmation message at the bottom */}
       {confirmationMessage && (
         <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: '100%',
+           style={{
+          //   position: 'absolute',
+          //   bottom: 0,
+          //   left: 0,
+          //   width: '100%',
             backgroundColor: isSuccess ? '#4CAF50' : '#f44336',
-            color: 'white',
-            textAlign: 'center',
-            padding: '10px',
-            fontWeight: 'bold',
-            transition: 'all 0.3s ease',
-          }}
+          //   color: 'white',
+          //   textAlign: 'center',
+          //   padding: '10px',
+          //   fontWeight: 'bold',
+          //   transition: 'all 0.3s ease',
+           }}
         >
           {confirmationMessage}
         </div>
       )}
     </div>
   );
-}
-
-export default Profile;
-
-
+};

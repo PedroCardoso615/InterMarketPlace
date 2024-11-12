@@ -1,33 +1,37 @@
-import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
-import styles from '../css/LoginSignup.module.css';
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import styles from "../css/LoginSignup.module.css";
 
 const db = getFirestore();
 
 export const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
-      // Save additional data (username and email only) to Firestore
-      await setDoc(doc(db, 'users', user.uid), {
+      // Save user data to Firestore
+      await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
         password: password,
       });
 
-      navigate('/home'); // Redirect to home page
+      navigate("/home"); // Redirect to home page
     } catch (err) {
       setError(err.message);
     }
@@ -37,13 +41,15 @@ export const Signup = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>Continuar com o Facebook</button>
-          <button className={styles.socialButton}>Continuar com o Apple</button>
-          <button className={styles.socialButton}>Continuar com o Google</button>
+          <button className={styles.socialButton}>
+            Continue with Facebook
+          </button>
+          <button className={styles.socialButton}>Continue with Apple</button>
+          <button className={styles.socialButton}>Continue with Google</button>
         </div>
 
         <div className={styles.separator}>
-          <span>OU</span>
+          <span>OR</span>
         </div>
 
         <form onSubmit={handleSignup} className={styles.form}>
@@ -77,12 +83,12 @@ export const Signup = () => {
           {error && <p className={styles.error}>{error}</p>}
 
           <button type="submit" className={styles.submitButton}>
-            Criar conta
+            Create Account
           </button>
         </form>
         <br />
         <p>
-          Já tens conta? <a href="/login">Entrar</a>
+          Already have an account? <a href="/login">Login</a>
         </p>
       </div>
     </div>

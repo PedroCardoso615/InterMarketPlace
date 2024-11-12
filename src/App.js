@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './components/Home'
-import Catalog from './components/Catalog';
+import {Navbar} from './components/Navbar';
+import {Home} from './components/Home'
+import {Catalog} from './components/Catalog';
 import {Listing} from './components/Listing';
 import {Login} from './components/Login';
 import {Signup} from './components/Signup';
-import Profile from './components/Profile';
+import {Profile} from './components/Profile';
 
 function App() {
   return (

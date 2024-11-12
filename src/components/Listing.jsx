@@ -2,10 +2,9 @@ import React, { useRef, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, auth, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+import styles from '../css/Listing.module.css';
 
 export const Listing = () => {
-
   const [newProductName, setNewProductName] = useState("");
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductPrice, setNewProductPrice] = useState(0);
@@ -20,7 +19,10 @@ export const Listing = () => {
       //Process the image upload
       let imageUrl = "";
       if (newProductImg) {
-        const imageFolderRef = ref(storage, `marketFiles/${newProductImg.name}`);
+        const imageFolderRef = ref(
+          storage,
+          `marketFiles/${newProductImg.name}`
+        );
         await uploadBytes(imageFolderRef, newProductImg);
         imageUrl = await getDownloadURL(imageFolderRef);
       }
@@ -42,7 +44,7 @@ export const Listing = () => {
       setNewProductImg(null);
       fileInputClear.current.value = "";
       alert("Product listed successfully!");
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   };
@@ -66,46 +68,52 @@ export const Listing = () => {
         <b>List Your Product</b>
       </h2>
       <hr />
-      <form autoComplete="off" className="form-group" onSubmit={(e) => e.preventDefault()}>
+      <form
+        autoComplete="off"
+        className="form-group"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <label htmlFor="product-name">Product Name</label>
         <br />
-        <input 
-        type="text" 
-        className="form-control" 
-        required
-        value={newProductName}
-        onChange={(e) => setNewProductName(e.target.value)}
+        <input
+          type="text"
+          className="form-control"
+          required
+          value={newProductName}
+          onChange={(e) => setNewProductName(e.target.value)}
         />
         <br />
         <label htmlFor="product-description">Description</label>
         <br />
-        <input 
-        type="text" 
-        className="form-control" 
-        required
-        value={newProductDescription}
-        onChange={(e) => setNewProductDescription(e.target.value)}
+        <input
+          type="text"
+          className="form-control"
+          required
+          value={newProductDescription}
+          onChange={(e) => setNewProductDescription(e.target.value)}
         />
         <br />
         <label htmlFor="product-price">Price</label>
         <br />
-        <input 
-        type="number" 
-        className="form-control" 
-        required
-        value={newProductPrice}
-        onChange={(e) => setNewProductPrice(Number(e.target.value) || 0)}
+        <input
+          type="number"
+          className="form-control"
+          required
+          value={newProductPrice}
+          onChange={(e) => setNewProductPrice(Number(e.target.value) || 0)}
         />
         <br />
         <label htmlFor="product-category">Category</label>
         <br />
-        <select 
-        className="form-control"
-        required
-        value={newProductCategory}
-        onChange={(e) => setNewProductCategory(e.target.value)}
+        <select
+          className="form-control"
+          required
+          value={newProductCategory}
+          onChange={(e) => setNewProductCategory(e.target.value)}
         >
-          <option value="" disabled>Choose category</option>
+          <option value="" disabled>
+            Choose category
+          </option>
           <optgroup label="Carros, Motas e Barcos">
             <option>Carros</option>
             <option>Motas</option>
@@ -181,15 +189,20 @@ export const Listing = () => {
           </optgroup>
         </select>
         <br />
-        <input 
-        type="file" 
-        className="form-control"
-        ref={fileInputClear}
-        required
-        onChange={handleFileChange}
+        <input
+          type="file"
+          className="form-control"
+          ref={fileInputClear}
+          required
+          onChange={handleFileChange}
         />
         <br />
-        <button className="btn btn-success butn-md list-btn" onClick={handleListProduct}>List Product</button>
+        <button
+          className={styles.list_btn}
+          onClick={handleListProduct}
+        >
+          List Product
+        </button>
       </form>
     </div>
   );
