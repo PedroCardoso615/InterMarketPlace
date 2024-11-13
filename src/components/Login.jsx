@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/LoginSignup.module.css";
@@ -15,12 +15,12 @@ export const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       // Redirect to home
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       setError("The provided credentials do not match our records.");
     }
   };
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>

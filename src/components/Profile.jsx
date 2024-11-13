@@ -1,19 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { auth } from '../firebase';
-import { getFirestore, doc, getDoc, updateDoc, deleteDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import styles from '../css/Catalog.module.css'; // Import the styles
+import React, { useEffect, useState } from "react";
+import { auth } from "../firebase";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import styles from "../css/Catalog.module.css"; // Import the styles
 
 const db = getFirestore();
 
 export const Profile = () => {
   const [userData, setUserData] = useState(null);
-  const [newUsername, setNewUsername] = useState('');
-  const [error, setError] = useState('');
+  const [newUsername, setNewUsername] = useState("");
+  const [error, setError] = useState("");
   const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
   const navigate = useNavigate();
@@ -23,20 +33,20 @@ export const Profile = () => {
       try {
         const user = auth.currentUser;
         if (user) {
-          const docRef = doc(db, 'users', user.uid);
+          const docRef = doc(db, "users", user.uid);
           const docSnap = await getDoc(docRef);
-          
+
           if (docSnap.exists()) {
             setUserData(docSnap.data());
             setNewUsername(docSnap.data().username);
           } else {
-            console.log('No such document!');
+            console.log("No such document!");
           }
-          
+
           // Get the products listed by the user
           const productsQuery = query(
-            collection(db, 'products'),
-            where('userId', '==', user.uid)
+            collection(db, "products"),
+            where("userId", "==", user.uid)
           );
           const querySnapshot = await getDocs(productsQuery);
           const products = [];
@@ -46,7 +56,7 @@ export const Profile = () => {
           setUserProducts(products);
         }
       } catch (err) {
-        setError('Failed to retrieve user data');
+        setError("Failed to retrieve user data");
         console.error(err);
       } finally {
         setLoading(false);
@@ -60,9 +70,9 @@ export const Profile = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      setError('Failed to log out');
+      setError("Failed to log out");
       console.error(err);
     }
   };
@@ -73,20 +83,19 @@ export const Profile = () => {
     const user = auth.currentUser;
     if (user && newUsername !== userData.username) {
       try {
-        const docRef = doc(db, 'users', user.uid);
+        const docRef = doc(db, "users", user.uid);
         await updateDoc(docRef, { username: newUsername });
         setUserData((prevData) => ({ ...prevData, username: newUsername }));
-        
-        setConfirmationMessage('Username updated successfully!');
+
+        setConfirmationMessage("Username updated successfully!");
         setIsSuccess(true);
-        
+
         setTimeout(() => {
-          setConfirmationMessage('');
+          setConfirmationMessage("");
           setIsSuccess(false);
         }, 3000);
-        
       } catch (err) {
-        setError('Failed to update username');
+        setError("Failed to update username");
         console.error(err);
       }
     }
@@ -95,17 +104,19 @@ export const Profile = () => {
   // Delete uploaded products
   const handleDeleteProduct = async (productId) => {
     try {
-      await deleteDoc(doc(db, 'products', productId));
-      setUserProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
-      setConfirmationMessage('Product deleted successfully!');
+      await deleteDoc(doc(db, "products", productId));
+      setUserProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productId)
+      );
+      setConfirmationMessage("Product deleted successfully!");
       setIsSuccess(true);
 
       setTimeout(() => {
-        setConfirmationMessage('');
+        setConfirmationMessage("");
         setIsSuccess(false);
       }, 3000);
     } catch (err) {
-      setError('Failed to delete product');
+      setError("Failed to delete product");
       console.error(err);
     }
   };
@@ -114,20 +125,29 @@ export const Profile = () => {
 
   return (
     <div>
-      {error && (
-        <div>
-          {error}
+      {confirmationMessage && (
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+
+            width: "100%",
+            backgroundColor: isSuccess ? "#4CAF50" : "#f44336",
+            color: "white",
+            textAlign: "center",
+            padding: "10px",
+            fontWeight: "bold",
+            transition: "all 0.3s ease",
+          }}
+        >
+          {confirmationMessage}
         </div>
       )}
+      {error && <div>{error}</div>}
 
       <div>
         <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          id="email"
-          value={userData.email}
-          readOnly
-        />
+        <input type="text" id="email" value={userData.email} readOnly />
       </div>
 
       <div>
@@ -140,7 +160,9 @@ export const Profile = () => {
         />
         <button onClick={handleUsernameChange}>Save Username</button>
       </div>
-
+      <button className={styles.logout} onClick={handleLogout}>
+        Log Out
+      </button>
       <div>
         <h3>Your Products</h3>
         <div className={styles.catalog_container}>
@@ -153,7 +175,9 @@ export const Profile = () => {
                 <h1>{product.name}</h1>
                 <p>{product.description}</p>
                 <p>{product.price}€</p>
-                <button onClick={() => handleDeleteProduct(product.id)}>Delete Product</button>
+                <button onClick={() => handleDeleteProduct(product.id)}>
+                  Delete Product
+                </button>
               </div>
             ))
           ) : (
@@ -161,27 +185,6 @@ export const Profile = () => {
           )}
         </div>
       </div>
-
-      <button onClick={handleLogout}>Log Out</button>
-
-      {confirmationMessage && (
-        <div
-           style={{
-          //   position: 'absolute',
-          //   bottom: 0,
-          //   left: 0,
-          //   width: '100%',
-            backgroundColor: isSuccess ? '#4CAF50' : '#f44336',
-          //   color: 'white',
-          //   textAlign: 'center',
-          //   padding: '10px',
-          //   fontWeight: 'bold',
-          //   transition: 'all 0.3s ease',
-           }}
-        >
-          {confirmationMessage}
-        </div>
-      )}
     </div>
   );
 };

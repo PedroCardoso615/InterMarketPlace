@@ -29,4 +29,8 @@
     cursor: pointer;
 }
 
-
+.hr {
+    margin: 0;
+    font-weight: bolder;
+    color: black;
+}

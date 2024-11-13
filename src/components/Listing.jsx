@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db, auth, storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import styles from '../css/Listing.module.css';
+import styles from "../css/Listing.module.css";
 
 export const Listing = () => {
   const [newProductName, setNewProductName] = useState("");
@@ -197,10 +197,7 @@ export const Listing = () => {
           onChange={handleFileChange}
         />
         <br />
-        <button
-          className={styles.list_btn}
-          onClick={handleListProduct}
-        >
+        <button className={styles.list_btn} onClick={handleListProduct}>
           List Product
         </button>
       </form>

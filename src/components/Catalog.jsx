@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { getDocs, collection } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  doc,
+  setDoc,
+  increment,
+} from "firebase/firestore";
 import styles from "../css/Catalog.module.css";
 
 export const Catalog = () => {
   const [productList, setProductList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterOption, setilterOption] = useState("");
-
-  const productsPerPage = 8; //Display only 8 products per page
+  const [filterOption, setFilterOption] = useState("");
+  const productsPerPage = 8; // Display only 8 products per page
   const productsCollectionRef = collection(db, "products");
 
   useEffect(() => {
     const getProductList = async () => {
-      // Get products from firebase
       try {
         const data = await getDocs(productsCollectionRef);
         const filteredData = data.docs.map((doc) => ({
@@ -28,7 +32,6 @@ export const Catalog = () => {
     getProductList();
   }, [productsCollectionRef]);
 
-  // Sorting products
   const filteredProducts = [...productList].sort((a, b) => {
     switch (filterOption) {
       case "price-asc":
@@ -44,7 +47,6 @@ export const Catalog = () => {
     }
   });
 
-  // Pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(
@@ -57,11 +59,30 @@ export const Catalog = () => {
     setCurrentPage(pageNumber);
   };
 
+  const addToCart = async (product) => {
+    const cartDocRef = doc(db, "Cart", product.id);
+
+    try {
+      await setDoc(
+        cartDocRef,
+        {
+          ...product,
+          qty: increment(1),
+          TotalProductPrice: increment(product.price),
+        },
+        { merge: true }
+      );
+      console.log("Added to cart successfully!");
+    } catch (error) {
+      console.error("Error adding to the cart.", error);
+    }
+  };
+
   return (
     <div>
       <div className={styles.filter_container}>
         <select
-          onChange={(e) => setilterOption(e.target.value)}
+          onChange={(e) => setFilterOption(e.target.value)}
           value={filterOption}
         >
           <option value="">Sort by</option>
@@ -81,7 +102,7 @@ export const Catalog = () => {
             <h1>{product.name}</h1>
             <p>{product.description}</p>
             <p>{product.price}€</p>
-            <button>Add to Cart</button>
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
           </div>
         ))}
       </div>

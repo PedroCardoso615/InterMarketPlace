@@ -34,7 +34,7 @@ export const Navbar = () => {
     <div>
       <header className={styles.header}>
         <div className={styles.logo}>
-          <a href="/home">
+          <a href="/">
             <img className={styles.logo_detail} src={logo} alt="Logo" />
           </a>
         </div>
@@ -62,7 +62,7 @@ export const Navbar = () => {
           </div>
         </nav>
       </header>
-      <hr />
+      <hr className={styles.hr}/>
     </div>
   );
 };

@@ -31,7 +31,7 @@ export const Signup = () => {
         password: password,
       });
 
-      navigate("/home"); // Redirect to home page
+      navigate("/"); // Redirect to home page
     } catch (err) {
       setError(err.message);
     }
@@ -41,9 +41,7 @@ export const Signup = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>
-            Continue with Facebook
-          </button>
+          <button className={styles.socialButton}>Continue with Facebook</button>
           <button className={styles.socialButton}>Continue with Apple</button>
           <button className={styles.socialButton}>Continue with Google</button>
         </div>
