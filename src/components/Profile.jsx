@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import styles from "../css/Catalog.module.css"; // Import the styles
+import styles from "../css/Profile.module.css";
 
 const db = getFirestore();
 
@@ -127,40 +127,42 @@ export const Profile = () => {
     <div>
       {confirmationMessage && (
         <div
+          className={styles.success_btn}
           style={{
-            position: "sticky",
-            top: 0,
-
-            width: "100%",
             backgroundColor: isSuccess ? "#4CAF50" : "#f44336",
-            color: "white",
-            textAlign: "center",
-            padding: "10px",
-            fontWeight: "bold",
-            transition: "all 0.3s ease",
           }}
         >
           {confirmationMessage}
         </div>
       )}
       {error && <div>{error}</div>}
+      <div className={styles.user_form}>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            className={styles.user_input}
+            type="text"
+            id="email"
+            value={userData.email}
+            readOnly
+          />
+        </div>
 
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input type="text" id="email" value={userData.email} readOnly />
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            className={styles.user_input}
+            type="text"
+            id="username"
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
+          />
+          <button className={styles.save_user} onClick={handleUsernameChange}>
+            Save Username
+          </button>
+        </div>
       </div>
-
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={newUsername}
-          onChange={(e) => setNewUsername(e.target.value)}
-        />
-        <button onClick={handleUsernameChange}>Save Username</button>
-      </div>
-      <button className={styles.logout} onClick={handleLogout}>
+      <button className={styles.logout_btn} onClick={handleLogout}>
         Log Out
       </button>
       <div>

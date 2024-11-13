@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { CartProducts } from "./CartProducts";
 import { useNavigate } from "react-router-dom";
-import "../css/Cart.module.css";
+import styles from "../css/Cart.module.css";
 
 export const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
@@ -64,7 +64,7 @@ export const Cart = () => {
   };
 
   return (
-    <div className="cart-container">
+    <div className={styles.cart_container}>
       {cartProducts.length > 0 ? (
         <>
           <CartProducts
@@ -73,9 +73,9 @@ export const Cart = () => {
             decreaseQty={decreaseQty}
             removeProduct={removeProduct}
           />
-          <div className="cart-total">
+          <div className={styles.cart_total}>
             <h3>Total Price: ${calculateTotalPrice().toFixed(2)}</h3>
-            <button className="checkout-button" onClick={handleCheckout}>
+            <button className={styles.checkout_btn} onClick={handleCheckout}>
               Checkout
             </button>
           </div>

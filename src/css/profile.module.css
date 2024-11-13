@@ -1,0 +1,136 @@
+.success_btn {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.user_form {
+    display: flex;
+    margin-left: 5px;
+}
+
+.user_input {
+  padding: 10px;
+  margin: 0 10px 15px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.logout_btn {
+    padding: 8px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    background-color: #0066cc;
+    color: white;
+    border: 4px solid #0066cc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.5s;
+  }
+
+.logout_btn:hover {
+    background-color: white;
+    color: #0066cc;
+}
+
+.logout_btn:active {
+    background-color: #b6b6b6;
+}
+
+.save_user {
+    padding: 5px;
+    margin: 0 5px 0 0;
+    background-color: #0066cc;
+    color: white;
+    border: 4px solid #0066cc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.save_user:hover {
+    background-color: white;
+    color: #0066cc;
+}
+
+.save_user:active {
+    background-color: #b6b6b6;
+}
+
+h3 {
+    margin-left: 5px;
+}
+
+.catalog_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.product_card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product_card img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  border-radius: 5px;
+}
+
+.product_card h1 {
+  font-size: 1.1em;
+  margin: 8px 0;
+  color: #333;
+}
+
+.product_card p {
+  font-size: 0.9em;
+  color: #666;
+  margin: 8px 0;
+}
+
+.product_card p:last-of-type {
+  font-weight: bold;
+  color: #222;
+}
+
+.product_card button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: #0066cc;
+  color: #fff;
+  border: 4px solid #0066cc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+  width: 100%;
+}
+
+.product_card button:hover {
+  background-color: #ffffff;
+  color: #0066cc;
+}
