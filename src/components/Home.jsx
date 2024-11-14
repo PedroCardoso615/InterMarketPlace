@@ -55,7 +55,7 @@ export const Home = () => {
       <div className={styles.container}>
         <img className={styles.banner} src={Banner} alt="Banner" />
       </div>
-
+      <h2 className={styles.products_heading}>Our Products</h2>
       <div className={styles.catalog_container}>
         {products.map((product) => (
           <div key={product.id} className={styles.product_card}>

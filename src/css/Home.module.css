@@ -4,6 +4,12 @@
     margin-top: 0px;
 }
 
+.products_heading {
+  text-align: center;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
 .catalog_container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

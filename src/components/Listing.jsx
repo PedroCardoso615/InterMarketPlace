@@ -88,6 +88,7 @@ export const Listing = () => {
         <input
           type="text"
           className="form-control"
+          maxLength={25}
           required
           value={newProductDescription}
           onChange={(e) => setNewProductDescription(e.target.value)}
