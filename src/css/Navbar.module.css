@@ -1,36 +1,116 @@
-.header {
+header {
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.498);
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.container nav {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
-    padding: 0;
 }
 
-.logo_detail {
-    width: 140px;
-    height: 140px;
+.container nav .logo_detail {
+    width: 160px;
+    height: 150px;
 }
 
-.navli {
-    display: inline-block;
-    margin: 0px 35px 0px 50px;
-    text-decoration: none;
+.nav_link {
+    display: flex;
+}
+
+.nav_link li {
+    list-style: none;
+    margin: 0 0.5rem;
+}
+
+.nav_link li a {
     color: black;
-    font-size: larger;
     font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0.7rem 1rem;
+    display: block;
+    border-radius: 10px;
+    text-decoration: none;
 }
 
-.navli:hover {
-    text-decoration: underline;
+.nav_link li button {
+    color: black;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0.7rem 1rem;
+    display: block;
+    border-radius: 10px;
+    text-decoration: none;
 }
 
-.navli:hover:last-child {
+.nav_link li a:hover {
+    background-color: #ecf0f1;
+}
+
+.nav_link li button:hover {
+    background-color: #ecf0f1;
+}
+
+.nav_link li a:active {
+    background-color: #d7dbdc;
+}
+
+.nav_link li button:active {
+    background-color: #d7dbdc;
+}
+
+.content {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.icon {
+    font-size: 2rem;
     cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .icon {
+        display: block;
+    }
+
+    .nav_link {
+        display: none;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: white;
+        position: absolute;
+        width: 350px;
+        height: 60vh;
+        top: 125px;
+        right: 0;
+        z-index: 10;
+        box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.419);
+        transition: all 0.7s;
+    }
+
+    .nav_link li a {
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.123);
+    }
+
+    .nav_link.active {
+        display: flex;
+    }
 }
 
 .hr {
     margin: 0;
-    font-weight: bolder;
-    color: black;
 }

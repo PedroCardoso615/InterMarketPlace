@@ -17,7 +17,7 @@
 
 .user_input {
   padding: 10px;
-  margin: 0 10px 15px 10px;
+  margin: 10px 10px 15px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
@@ -132,5 +132,10 @@ h3 {
 
 .product_card button:hover {
   background-color: #ffffff;
+  color: #0066cc;
+}
+
+.product_card button:active {
+  background-color: #b6b6b6;
   color: #0066cc;
 }
