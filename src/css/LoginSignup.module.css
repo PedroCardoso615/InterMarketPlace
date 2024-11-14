@@ -72,6 +72,11 @@ label {
   color: #0066cc;
 }
 
+.submitButton:active {
+  background-color: #b6b6b6;
+  color: white;
+}
+
 .error {
   color: red;
   font-size: 12px;

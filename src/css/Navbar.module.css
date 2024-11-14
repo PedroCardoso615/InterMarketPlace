@@ -37,6 +37,7 @@ header {
     font-size: 1.3rem;
     padding: 0.7rem 1rem;
     display: block;
+    text-align: center;
     border-radius: 10px;
     text-decoration: none;
 }
@@ -52,10 +53,6 @@ header {
     display: block;
     border-radius: 10px;
     text-decoration: none;
-}
-
-.nav_link li button img {
-    display: flex;
 }
 
 .nav_link li a:hover {
