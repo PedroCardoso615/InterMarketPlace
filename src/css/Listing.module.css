@@ -7,7 +7,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: .5s;
+    transition: 0.5s;
   }
   
   .list_btn:hover {

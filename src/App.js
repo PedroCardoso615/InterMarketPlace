@@ -11,6 +11,7 @@ import {Profile} from './components/Profile';
 import {Cart} from './components/Cart';
 import { Footer } from './components/Footer';
 import { Checkout } from './components/Checkout';
+import { OrderComplete } from './components/OrderCompleted';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path='/order' element={<OrderComplete />} />
           </Routes>
         </div>
         <Footer />
