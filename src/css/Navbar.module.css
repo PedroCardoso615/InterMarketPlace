@@ -48,9 +48,14 @@ header {
     font-weight: bold;
     font-size: 1.3rem;
     padding: 0.7rem 1rem;
+    width: 100%;
     display: block;
     border-radius: 10px;
     text-decoration: none;
+}
+
+.nav_link li button img {
+    display: flex;
 }
 
 .nav_link li a:hover {
@@ -103,6 +108,10 @@ header {
     }
 
     .nav_link li a {
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.123);
+    }
+
+    .nav_link li button {
         box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.123);
     }
 
