@@ -72,9 +72,9 @@ export const Catalog = () => {
         },
         { merge: true }
       );
-      console.log("Added to cart successfully!");
+      alert("Added to cart successfully!");
     } catch (error) {
-      console.error("Error adding to the cart.", error);
+      alert("Error adding to the cart.", error);
     }
   };
 

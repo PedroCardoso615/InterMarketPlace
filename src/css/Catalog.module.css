@@ -63,6 +63,10 @@
   color: #0066cc;
 }
 
+.product_card button:active {
+  background-color: #b6b6b6;
+}
+
 .pagination_bar {
   display: flex;
   justify-content: center;
