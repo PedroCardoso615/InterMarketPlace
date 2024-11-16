@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { collection, getDocs, doc, setDoc, increment } from "firebase/firestore";
 import { db } from "../firebase"; 
 import { useNavigate } from "react-router-dom"; 
-import Banner from "../images/Banner2.png";
+import Banner from "../images/Banner.png";
 import styles from '../css/Home.module.css';
 
 export const Home = () => {
