@@ -15,6 +15,8 @@ export const Catalog = () => {
   const [filterOption, setFilterOption] = useState("");
   const productsPerPage = 8; // Display only 8 products per page
   const productsCollectionRef = collection(db, "products");
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     const getProductList = async () => {
@@ -72,9 +74,21 @@ export const Catalog = () => {
         },
         { merge: true }
       );
-      alert("Added to cart successfully!");
+      setConfirmationMessage("Added to cart successfully!");
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        setConfirmationMessage("");
+        setIsSuccess(false);
+      }, 3000);
     } catch (error) {
-      alert("Error adding to the cart.", error);
+      setConfirmationMessage("Error adding to the cart.");
+      setIsSuccess(false);
+
+      setTimeout(() => {
+        setConfirmationMessage("");
+        setIsSuccess(false);
+      }, 3000);
     }
   };
 
@@ -92,6 +106,17 @@ export const Catalog = () => {
           <option value="name-desc">Name: Z to A</option>
         </select>
       </div>
+
+      {confirmationMessage && (
+        <div
+          className={styles.success_btn}
+          style={{
+            backgroundColor: isSuccess ? "#4CAF50" : "#f44336",
+          }}
+        >
+          {confirmationMessage}
+        </div>
+      )}
 
       <div className={styles.catalog_container}>
         {currentProducts.map((product) => (

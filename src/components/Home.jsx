@@ -8,6 +8,8 @@ import styles from '../css/Home.module.css';
 export const Home = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,9 +41,21 @@ export const Home = () => {
         },
         { merge: true }
       );
-      alert("Added to cart successfully!");
+      setConfirmationMessage("Added to cart successfully!");
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        setConfirmationMessage("");
+        setIsSuccess(false);
+      }, 3000);
     } catch (error) {
-      alert("Error adding to the cart.", error);
+      setConfirmationMessage("Error adding to the cart.");
+      setIsSuccess(false);
+
+      setTimeout(() => {
+        setConfirmationMessage("");
+        setIsSuccess(false);
+      }, 3000);
     }
   };
 
@@ -51,11 +65,21 @@ export const Home = () => {
   };
 
   return (
-    <>
-      <div className={styles.container}>
+    <div>
+      <div className={styles.banner_container}>
         <img className={styles.banner} src={Banner} alt="Banner" />
       </div>
       <h2 className={styles.products_heading}>Our Products</h2>
+      {confirmationMessage && (
+        <div
+          className={styles.success_btn}
+          style={{
+            backgroundColor: isSuccess ? "#4CAF50" : "#f44336",
+          }}
+        >
+          {confirmationMessage}
+        </div>
+      )}
       <div className={styles.catalog_container}>
         {products.map((product) => (
           <div key={product.id} className={styles.product_card}>
@@ -75,6 +99,6 @@ export const Home = () => {
           Browse All Products
         </button>
       </div>
-    </>
+    </div>
   );
 };

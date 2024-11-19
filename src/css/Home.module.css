@@ -1,6 +1,18 @@
-.banner {
+.success_btn {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.banner{
     width: 100%;
-    margin-top: 0px;
+    height: auto;
 }
 
 @media (max-width: 768px) {

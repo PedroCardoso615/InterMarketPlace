@@ -1,3 +1,15 @@
+.success_btn {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
 .catalog_container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -96,15 +108,14 @@
 }
 
 .filter_container {
-    margin: 20px 0;
-    padding: 0 20px;
-  }
-  
-  .filter_container select {
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-  }
-  
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.filter_container select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
