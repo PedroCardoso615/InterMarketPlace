@@ -25,7 +25,7 @@ export const Listing = () => {
       !newProductCategory ||
       !newProductImg
     ) {
-      setConfirmationMessage("Please fill all fields correctly.");
+      setConfirmationMessage("Please fill all fields.");
       setIsSuccess(false);
 
       setTimeout(() => {
