@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import {
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
+  FacebookAuthProvider,
+  OAuthProvider,
   signInWithPopup,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +18,14 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const provider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
+  const appleProvider = new OAuthProvider("apple.com");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Redirect to home
       navigate("/");
     } catch (err) {
       setError("The provided credentials do not match our records.");
@@ -30,29 +33,32 @@ export const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    signInWithPopup(auth, googleProvider)
+      .then((result) => navigate("/"))
+      .catch((error) => setError("Google login failed. Please try again."));
+  };
+
+  const handleFacebookLogin = () => {
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => navigate("/"))
+      .catch((error) => setError("Facebook login failed. Please try again."));
+  };
+
+  const handleAppleLogin = () => {
+    signInWithPopup(auth, appleProvider)
+      .then((result) => navigate("/"))
+      .catch((error) => setError("Apple login failed. Please try again."));
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>
-            <img
-              src={facebook}
-              alt="facebook icon"
-              className={styles.socialIcon}
-            />
+          <button className={styles.socialButton} onClick={handleFacebookLogin}>
+            <img src={facebook} alt="facebook icon" className={styles.socialIcon} />
             Continue with Facebook
           </button>
-          <button className={styles.socialButton}>
+          <button className={styles.socialButton} onClick={handleAppleLogin}>
             <img src={apple} alt="apple icon" className={styles.socialIcon} />
             Continue with Apple
           </button>
@@ -99,3 +105,4 @@ export const Login = () => {
     </div>
   );
 };
+
