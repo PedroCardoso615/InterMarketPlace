@@ -47,7 +47,7 @@
 
 .save_user {
     padding: 5px;
-    margin: 0 5px 0 0;
+    margin: 0 15px 0 0;
     background-color: #0066cc;
     color: white;
     border: 4px solid #0066cc;
@@ -64,6 +64,32 @@
 
 .save_user:active {
     background-color: #b6b6b6;
+}
+
+@media (max-width: 1150px) {
+  .user_form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 10px;
+    margin: 0 10px;
+  }
+
+  .user_input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .save_user {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .logout_btn {
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+  }
 }
 
 h3 {
@@ -138,4 +164,9 @@ h3 {
 .product_card button:active {
   background-color: #b6b6b6;
   color: #0066cc;
+}
+
+.products_text {
+  display: flex;
+  justify-content: center;
 }

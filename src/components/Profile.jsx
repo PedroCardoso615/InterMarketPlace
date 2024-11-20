@@ -11,81 +11,89 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged, updatePassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/Profile.module.css";
 
 const db = getFirestore();
 
 export const Profile = () => {
-  const [userData, setUserData] = useState(null);
+  const [userIn, setUserIn] = useState(null);
   const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState("");
   const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loginProvider, setLoginProvider] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    let unsubscribe;
+
     const fetchUserData = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
+      setLoading(true);
 
-          if (docSnap.exists()) {
-            setUserData(docSnap.data());
-            setNewUsername(docSnap.data().username);
-          } else {
-            console.log("No such document!");
+      unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (currentUser) {
+          setUserIn(currentUser);
+
+          const provider = currentUser.providerData[0]?.providerId || "";
+          setLoginProvider(provider);
+
+          try {
+            const docRef = doc(db, "users", currentUser.uid);
+            const userDoc = await getDoc(docRef);
+
+            if (userDoc.exists()) {
+              setNewUsername(userDoc.data().username || "");
+            }
+
+            const productsQuery = query(
+              collection(db, "products"),
+              where("userId", "==", currentUser.uid)
+            );
+            const productsSnapshot = await getDocs(productsQuery);
+            const productsList = productsSnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setUserProducts(productsList);
+          } catch (err) {
+            console.error("Failed fetching user data:", err);
+            setError("Failed to load user data");
           }
-
-          // Get the products listed by the user
-          const productsQuery = query(
-            collection(db, "products"),
-            where("userId", "==", user.uid)
-          );
-          const querySnapshot = await getDocs(productsQuery);
-          const products = [];
-          querySnapshot.forEach((doc) => {
-            products.push({ ...doc.data(), id: doc.id });
-          });
-          setUserProducts(products);
+        } else {
+          navigate("/login");
         }
-      } catch (err) {
-        setError("Failed to retrieve user data");
-        console.error(err);
-      } finally {
         setLoading(false);
-      }
+      });
     };
-
     fetchUserData();
-  }, []);
 
-  // Logout button
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [navigate]);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
       navigate("/login");
     } catch (err) {
-      setError("Failed to log out");
+      setError("Failed to log out.");
       console.error(err);
     }
   };
 
-  // Username change
   const handleUsernameChange = async (e) => {
     e.preventDefault();
-    const user = auth.currentUser;
-    if (user && newUsername !== userData.username) {
+    if (userIn && newUsername !== userIn.username) {
       try {
-        const docRef = doc(db, "users", user.uid);
+        const docRef = doc(db, "users", userIn.uid);
         await updateDoc(docRef, { username: newUsername });
-        setUserData((prevData) => ({ ...prevData, username: newUsername }));
 
         setConfirmationMessage("Username updated successfully!");
         setIsSuccess(true);
@@ -101,7 +109,26 @@ export const Profile = () => {
     }
   };
 
-  // Delete uploaded products
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    if (newPassword.length >= 7) {
+      try {
+        await updatePassword(auth.currentUser, newPassword);
+        setConfirmationMessage("Passaword updated successfully!");
+        setIsSuccess(true);
+
+        setTimeout(() => {
+          setConfirmationMessage("");
+          setIsSuccess(false);
+        }, 3000);
+      } catch (err) {
+        setError("Failed to update password");
+      }
+    } else {
+      setError("Password must be at least 7 characters long.");
+    }
+  };
+
   const handleDeleteProduct = async (productId) => {
     try {
       await deleteDoc(doc(db, "products", productId));
@@ -143,24 +170,37 @@ export const Profile = () => {
             className={styles.user_input}
             type="text"
             id="email"
-            value={userData.email}
+            value={userIn.email}
             readOnly
           />
         </div>
+        {loginProvider === "password" && (
+          <div>
+            <label htmlFor="username">Username:</label>
+            <input
+              className={styles.user_input}
+              type="text"
+              id="username"
+              value={newUsername}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
+            <button className={styles.save_user} onClick={handleUsernameChange}>
+              Save Username
+            </button>
 
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            className={styles.user_input}
-            type="text"
-            id="username"
-            value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
-          />
-          <button className={styles.save_user} onClick={handleUsernameChange}>
-            Save Username
-          </button>
-        </div>
+            <label htmlFor="password">New Password:</label>
+            <input
+              className={styles.user_input}
+              type="password"
+              id="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <button className={styles.save_user} onClick={handlePasswordChange}>
+              Change Password
+            </button>
+          </div>
+        )}
       </div>
       <button className={styles.logout_btn} onClick={handleLogout}>
         Log Out

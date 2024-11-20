@@ -3,7 +3,7 @@ import { collection, getDocs, doc, setDoc, increment } from "firebase/firestore"
 import { db } from "../firebase"; 
 import { useNavigate } from "react-router-dom"; 
 import Banner from "../images/Banner.png";
-import styles from '../css/Home.module.css';
+import styles from "../css/Home.module.css";
 
 export const Home = () => {
   const [products, setProducts] = useState([]);
@@ -59,7 +59,6 @@ export const Home = () => {
     }
   };
 
-  // Function to "Browse All Products" button
   const handleBrowseAll = () => {
     navigate("/catalog"); // Redirect to the catalog page
   };

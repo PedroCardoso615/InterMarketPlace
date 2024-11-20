@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/LoginSignup.module.css";
@@ -12,6 +16,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,20 +29,35 @@ export const Login = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
           <button className={styles.socialButton}>
-            <img src={facebook} alt="google" className={styles.socialIcon} />
+            <img
+              src={facebook}
+              alt="facebook icon"
+              className={styles.socialIcon}
+            />
             Continue with Facebook
           </button>
           <button className={styles.socialButton}>
-            <img src={apple} alt="google" className={styles.socialIcon} />
+            <img src={apple} alt="apple icon" className={styles.socialIcon} />
             Continue with Apple
           </button>
-          <button className={styles.socialButton}>
-            <img src={google} alt="google" className={styles.socialIcon} />
+          <button className={styles.socialButton} onClick={handleGoogleLogin}>
+            <img src={google} alt="google icon" className={styles.socialIcon} />
             Continue with Google
           </button>
         </div>
