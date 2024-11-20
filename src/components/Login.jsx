@@ -3,6 +3,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/LoginSignup.module.css";
+import google from "../images/google.png";
+import facebook from "../images/facebook.png";
+import apple from "../images/apple.png";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,9 +28,18 @@ export const Login = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>Continue with Facebook</button>
-          <button className={styles.socialButton}>Continue with Apple</button>
-          <button className={styles.socialButton}>Continue with Google</button>
+          <button className={styles.socialButton}>
+            <img src={facebook} alt="google" className={styles.socialIcon} />
+            Continue with Facebook
+          </button>
+          <button className={styles.socialButton}>
+            <img src={apple} alt="google" className={styles.socialIcon} />
+            Continue with Apple
+          </button>
+          <button className={styles.socialButton}>
+            <img src={google} alt="google" className={styles.socialIcon} />
+            Continue with Google
+          </button>
         </div>
 
         <div className={styles.separator}>

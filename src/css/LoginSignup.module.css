@@ -23,11 +23,26 @@
 .socialButton {
   background-color: #0066cc;
   color: white;
-  border: none;
+  border: 4px solid #0066cc;
   padding: 12px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+.socialButton:hover {
+  background-color: white;
+  color: #0066cc;
+}
+
+.socialButton:active {
+  background-color: #b6b6b6;
+}
+
+.socialIcon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
 
 .separator {
@@ -52,7 +67,7 @@ label {
 .input {
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #a0a0a095;
   border-radius: 5px;
   font-size: 14px;
 }

@@ -4,6 +4,9 @@ import { auth } from "../firebase";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/LoginSignup.module.css";
+import google from "../images/google.png";
+import facebook from "../images/facebook.png";
+import apple from "../images/apple.png";
 
 const db = getFirestore();
 
@@ -41,9 +44,18 @@ export const Signup = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <div className={styles.socialButtons}>
-          <button className={styles.socialButton}>Continue with Facebook</button>
-          <button className={styles.socialButton}>Continue with Apple</button>
-          <button className={styles.socialButton}>Continue with Google</button>
+          <button className={styles.socialButton}>
+            <img src={facebook} alt="facebook icon" className={styles.socialIcon} />
+            Continue with Facebook
+          </button>
+          <button className={styles.socialButton}>
+            <img src={apple} alt="apple icon" className={styles.socialIcon} />
+            Continue with Apple
+          </button>
+          <button className={styles.socialButton}>
+            <img src={google} alt="google icon" className={styles.socialIcon} />
+            Continue with Google
+          </button>
         </div>
 
         <div className={styles.separator}>
