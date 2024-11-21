@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import {
   GoogleAuthProvider,
   FacebookAuthProvider,
-  OAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/LoginSignup.module.css";
 import google from "../images/google.png";
 import facebook from "../images/facebook.png";
-import apple from "../images/apple.png";
+import github from "../images/github.png";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
-  const appleProvider = new OAuthProvider("apple.com");
+  const githubProvider = new GithubAuthProvider();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export const Login = () => {
   };
 
   const handleAppleLogin = () => {
-    signInWithPopup(auth, appleProvider)
+    signInWithPopup(auth, githubProvider)
       .then((result) => navigate("/"))
       .catch((error) => setError("Apple login failed. Please try again."));
   };
@@ -59,8 +59,8 @@ export const Login = () => {
             Continue with Facebook
           </button>
           <button className={styles.socialButton} onClick={handleAppleLogin}>
-            <img src={apple} alt="apple icon" className={styles.socialIcon} />
-            Continue with Apple
+            <img src={github} alt="github icon" className={styles.socialIcon} />
+            Continue with GitHub
           </button>
           <button className={styles.socialButton} onClick={handleGoogleLogin}>
             <img src={google} alt="google icon" className={styles.socialIcon} />

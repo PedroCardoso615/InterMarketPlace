@@ -1,3 +1,8 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 .success_btn {
   position: sticky;
   top: 0;
@@ -7,6 +12,7 @@
   padding: 10px;
   margin-bottom: 10px;
   font-weight: bold;
+  z-index: 10;
   transition: all 0.3s ease;
 }
 
@@ -17,7 +23,7 @@
 
 .user_input {
   padding: 10px;
-  margin: 10px 10px 15px 10px;
+  margin: 10px 10px 15px 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
@@ -72,7 +78,7 @@
     flex-direction: column;
     text-align: left;
     gap: 10px;
-    margin: 0 10px;
+    margin: 10px 110px;
   }
 
   .user_input {
