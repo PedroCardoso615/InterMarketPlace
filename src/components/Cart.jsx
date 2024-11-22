@@ -19,27 +19,34 @@ export const Cart = () => {
   useEffect(() => {
     const cartCollectionRef = collection(db, "Cart");
     const unsubscribe = onSnapshot(cartCollectionRef, (snapshot) => {
-      setCartProducts(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      );
+      const products = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCartProducts(products);
     });
     return unsubscribe;
   }, []);
 
   // Function to calculate total price
   const calculateTotalPrice = () => {
-    return cartProducts.reduce(
-      (total, product) => total + product.price * product.qty,
-      0
-    );
+    return cartProducts.reduce((total, product) => {
+      const price = Number(product.price) || 0;
+      const qty = Number(product.qty) || 0;
+      return total + price * qty;
+    }, 0);
   };
 
   const increaseQty = async (product) => {
-    const productRef = doc(db, "Cart", product.id);
-    await updateDoc(productRef, {
-      qty: increment(1),
-      TotalProductPrice: increment(product.price),
-    });
+    try {
+      const productRef = doc(db, "Cart", product.id);
+      await updateDoc(productRef, {
+        qty: increment(1),
+        TotalProductPrice: increment(product.price),
+      });
+    } catch (error) {
+      console.error("Failed to increase quantity:", error);
+    }
   };
 
   const decreaseQty = async (product) => {
@@ -81,7 +88,10 @@ export const Cart = () => {
           </div>
         </>
       ) : (
-        <div>No products in the cart.</div>
+        <div className={styles.empty_cart}>
+          <p>Your cart is empty. Start shopping!</p>
+          <button onClick={() => navigate("/catalog")}>Shop Now</button>
+        </div>
       )}
     </div>
   );

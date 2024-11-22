@@ -159,78 +159,78 @@ export const Listing = () => {
             <option value="" disabled>
               Choose category
             </option>
-            <optgroup label="Carros, Motas e Barcos">
-              <option>Carros</option>
-              <option>Motas</option>
-              <option>Barcos</option>
-              <option>Peças e Acessórios</option>
+            <optgroup label="Cars, Motorcycles, and Boats">
+              <option>Cars</option>
+              <option>Motorcycles</option>
+              <option>Boats</option>
+              <option>Parts and Accessories</option>
             </optgroup>
-            <optgroup label="Imóveis">
-              <option>Apartamentos</option>
-              <option>Moradias</option>
-              <option>Quartos para Alugar</option>
-              <option>Terrenos e Quintas</option>
-              <option>Garagens e Estacionamento</option>
-              <option>Escritórios e Comércio</option>
-              <option>Armazéns</option>
+            <optgroup label="Real Estate">
+              <option>Apartments</option>
+              <option>Houses</option>
+              <option>Rooms for Rent</option>
+              <option>Land and Farms</option>
+              <option>Garages and Parking</option>
+              <option>Offices and Commercial Spaces</option>
+              <option>Warehouses</option>
             </optgroup>
-            <optgroup label="Bebé e Criança">
-              <option>Roupas para Bebé</option>
-              <option>Roupas para Criança</option>
-              <option>Calçado</option>
-              <option>Segurança e Puericultura</option>
-              <option>Alimentação e Cadeiras</option>
-              <option>Brinquedos e Jogos</option>
+            <optgroup label="Baby and Child">
+              <option>Baby Clothes</option>
+              <option>Children's Clothes</option>
+              <option>Footwear</option>
+              <option>Safety and Nursery</option>
+              <option>Feeding and Chairs</option>
+              <option>Toys and Games</option>
             </optgroup>
-            <optgroup label="Lazer">
-              <option>Brinquedos e Jogos</option>
-              <option>Instrumentos Musicais</option>
-              <option>Livros e Revistas</option>
-              <option>Desporto e Fitness</option>
-              <option>Videogames e Consolas</option>
-              <option>Filmes e Séries</option>
+            <optgroup label="Leisure">
+              <option>Toys and Games</option>
+              <option>Musical Instruments</option>
+              <option>Books and Magazines</option>
+              <option>Sports and Fitness</option>
+              <option>Video Games and Consoles</option>
+              <option>Movies and Series</option>
             </optgroup>
-            <optgroup label="Telemóveis e Tablets">
-              <option>Telemóveis</option>
+            <optgroup label="Mobile Phones and Tablets">
+              <option>Mobile Phones</option>
               <option>Tablets</option>
-              <option>Acessórios</option>
+              <option>Accessories</option>
               <option>Smartwatches</option>
             </optgroup>
-            <optgroup label="Tecnologia">
-              <option>Consolas</option>
-              <option>Computadores Portáteis</option>
-              <option>Computadores de Secretária</option>
-              <option>Componentes e Peças</option>
-              <option>Fotografia e Drones</option>
-              <option>TV, Som e Multimédia</option>
+            <optgroup label="Technology">
+              <option>Consoles</option>
+              <option>Laptops</option>
+              <option>Desktop Computers</option>
+              <option>Components and Parts</option>
+              <option>Photography and Drones</option>
+              <option>TV, Audio, and Multimedia</option>
             </optgroup>
-            <optgroup label="Móveis, Casa e Jardim">
-              <option>Móveis</option>
-              <option>Decoração</option>
-              <option>Electrodomésticos</option>
-              <option>Jardinagem e Agricultura</option>
-              <option>Animais de Estimação</option>
-              <option>Produtos para Animais</option>
+            <optgroup label="Furniture, Home, and Garden">
+              <option>Furniture</option>
+              <option>Decoration</option>
+              <option>Home Appliances</option>
+              <option>Gardening and Farming</option>
+              <option>Pets</option>
+              <option>Pet Products</option>
             </optgroup>
-            <optgroup label="Emprego">
-              <option>Construção Civil</option>
-              <option>Saúde e Beleza</option>
-              <option>Informática e Programação</option>
-              <option>Hotelaria e Restauração</option>
-              <option>Comercial e Vendas</option>
-              <option>Outros</option>
+            <optgroup label="Jobs">
+              <option>Construction</option>
+              <option>Health and Beauty</option>
+              <option>IT and Programming</option>
+              <option>Hospitality and Catering</option>
+              <option>Sales and Marketing</option>
+              <option>Others</option>
             </optgroup>
-            <optgroup label="Serviços">
-              <option>Transporte e Mudanças</option>
-              <option>Aulas e Explicações</option>
-              <option>Consultoria e Negócios</option>
-              <option>Organização de Eventos</option>
-              <option>Serviços Domésticos</option>
-              <option>Outros Serviços</option>
+            <optgroup label="Services">
+              <option>Transportation and Moving</option>
+              <option>Lessons and Tutoring</option>
+              <option>Consulting and Business</option>
+              <option>Event Planning</option>
+              <option>Domestic Services</option>
+              <option>Other Services</option>
             </optgroup>
-            <optgroup label="Outros">
-              <option>Antiguidades e Coleções</option>
-              <option>Outros Artigos</option>
+            <optgroup label="Others">
+              <option>Antiques and Collectibles</option>
+              <option>Other Items</option>
             </optgroup>
           </select>
           <br />

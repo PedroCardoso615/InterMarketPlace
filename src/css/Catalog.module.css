@@ -19,6 +19,12 @@
   margin: auto;
 }
 
+@media (max-width: 768px) {
+  .catalog_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .product_card {
   border: 1px solid #ddd;
   border-radius: 8px;
