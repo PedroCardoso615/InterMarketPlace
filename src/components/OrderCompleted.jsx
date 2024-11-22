@@ -8,7 +8,7 @@ export const OrderComplete = () => {
 
   const handleRedirect = async (event) => {
     event.preventDefault();
-    navigate("/"); // Redirect to home
+    navigate("/"); // Redirect to home.
   };
 
   return (

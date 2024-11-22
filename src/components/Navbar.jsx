@@ -13,7 +13,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Track if user is logged in
+    // Track if user is logged in.
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
@@ -22,9 +22,9 @@ export const Navbar = () => {
 
   const handleUserIconClick = () => {
     if (user) {
-      navigate("/profile"); // Redirect to profile if user is logged in
+      navigate("/profile"); // Redirect to profile if user is logged in.
     } else {
-      navigate("/login"); // Redirect to login if no user is logged in
+      navigate("/login"); // Redirect to login if no user is logged in.
     }
   };
 

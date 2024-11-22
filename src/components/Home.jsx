@@ -19,7 +19,7 @@ export const Home = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setProducts(productsArray.slice(0, 4)); // Limit to 4 products
+        setProducts(productsArray.slice(0, 4));
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -60,7 +60,7 @@ export const Home = () => {
   };
 
   const handleBrowseAll = () => {
-    navigate("/catalog"); // Redirect to the catalog page
+    navigate("/catalog"); // Redirect to the catalog page.
   };
 
   return (

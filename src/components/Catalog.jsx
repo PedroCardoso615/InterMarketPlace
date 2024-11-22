@@ -35,7 +35,7 @@ export const Catalog = () => {
     getProductList();
   }, [productsCollectionRef]);
 
-  // Filter and sort products
+  // Filter and sort products.
   const filteredProducts = [...productList]
     .filter((product) => {
       if (!selectedCategory) return true;

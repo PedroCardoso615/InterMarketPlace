@@ -17,7 +17,7 @@ export const Listing = () => {
   const fileInputClear = useRef(null);
 
   const handleListProduct = async () => {
-    // Validates the inputs before uploading the product
+    // Validates the inputs before uploading the product.
     if (
       !newProductName.trim() ||
       !newProductDescription.trim() ||
@@ -36,7 +36,7 @@ export const Listing = () => {
     }
 
     try {
-      //Process the image upload
+      //Process the image upload.
       let imageUrl = "";
       if (newProductImg) {
         const imageFolderRef = ref(
@@ -47,7 +47,7 @@ export const Listing = () => {
         imageUrl = await getDownloadURL(imageFolderRef);
       }
 
-      //Product upload to Firestore
+      //Product upload to Firestore.
       await addDoc(productsCollectionRef, {
         name: newProductName,
         description: newProductDescription,
@@ -64,7 +64,7 @@ export const Listing = () => {
       setNewProductImg(null);
       fileInputClear.current.value = "";
 
-      setConfirmationMessage("Product listed successfully");
+      setConfirmationMessage("Product listed successfully!");
       setIsSuccess(true);
 
       setTimeout(() => {
@@ -74,6 +74,7 @@ export const Listing = () => {
     } catch (err) {
       setConfirmationMessage("Error listing the product.");
       setIsSuccess(false);
+      console.log(err);
 
       setTimeout(() => {
         setConfirmationMessage("");
@@ -82,7 +83,7 @@ export const Listing = () => {
     }
   };
 
-  //Process only JPG, JPG AND PNG
+  //Process only JPG, JPG AND PNG.
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && ["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {

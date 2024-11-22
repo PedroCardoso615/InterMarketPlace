@@ -32,13 +32,13 @@ export const Signup = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save user data to Firestore
+      // Save user data to Firestore.
       await setDoc(doc(db, "users", user.uid), {
         username: username,
         email: email,
       });
 
-      navigate("/"); // Redirect to home page
+      navigate("/"); // Redirect to home page.
     } catch (err) {
       setError("Signup failed. Please check your details and try again.");
     }
@@ -49,17 +49,17 @@ export const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if user already exists in Firestore
+      // Check if user already exists in Firestore.
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (!userDoc.exists()) {
-        // Save user data to Firestore (username and email)
+        // Save user data to Firestore (username and email).
         await setDoc(doc(db, "users", user.uid), {
           username: user.displayName || "User",
           email: user.email,
         });
       }
 
-      navigate("/"); // Redirect to home page
+      navigate("/"); // Redirect to home page.
     } catch (error) {
       setError("Social signup/login failed. Please try again.");
     }

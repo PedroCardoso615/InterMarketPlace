@@ -28,7 +28,7 @@ export const Cart = () => {
     return unsubscribe;
   }, []);
 
-  // Function to calculate total price
+  // Function to calculate total price.
   const calculateTotalPrice = () => {
     return cartProducts.reduce((total, product) => {
       const price = Number(product.price) || 0;
@@ -67,7 +67,7 @@ export const Cart = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/Checkout"); // Redirect to Checkout
+    navigate("/Checkout"); // Redirect to Checkout.
   };
 
   return (

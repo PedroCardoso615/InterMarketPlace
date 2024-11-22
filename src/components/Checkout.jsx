@@ -12,7 +12,7 @@ export const Checkout = () => {
     event.preventDefault();
     alert("Payment Successful");
     await clearCart();
-    navigate("/order"); // Redirect to home
+    navigate("/order"); // Redirect to home.
   };
 
   const clearCart = async () => {
