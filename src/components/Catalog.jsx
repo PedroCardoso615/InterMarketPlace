@@ -13,7 +13,7 @@ export const Catalog = () => {
   const [productList, setProductList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterOption, setFilterOption] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(""); // State for category
+  const [selectedCategory, setSelectedCategory] = useState("");
   const productsPerPage = 8;
   const productsCollectionRef = collection(db, "products");
   const [confirmationMessage, setConfirmationMessage] = useState("");
