@@ -81,7 +81,7 @@ export const Cart = () => {
             removeProduct={removeProduct}
           />
           <div className={styles.cart_total}>
-            <h3>Total Price: ${calculateTotalPrice().toFixed(2)}</h3>
+            <h3>Total Price: {calculateTotalPrice().toFixed(2)}€</h3>
             <button className={styles.checkout_btn} onClick={handleCheckout}>
               Checkout
             </button>

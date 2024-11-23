@@ -17,7 +17,7 @@ export const IndividualCartProduct = ({
       </div>
       <div className={styles.product_details}>
         <h2>{product.name}</h2>
-        <p>Price: ${product.price}</p>
+        <p>Price: {product.price}€</p>
         <p>Quantity: {product.qty}</p>
         <div className={styles.quantity_controls}>
           <button onClick={() => decreaseQty(product)}>
