@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/marketplace/static/css/main.5921e3dd.css",
+    "main.js": "/marketplace/static/js/main.461c4f69.js",
+    "static/js/453.d893c995.chunk.js": "/marketplace/static/js/453.d893c995.chunk.js",
+    "static/media/Banner.png": "/marketplace/static/media/Banner.9c099cc49d89ad773eb5.png",
+    "static/media/IMPInv.png": "/marketplace/static/media/IMPInv.eceb5872c21024232d23.png",
+    "static/media/twitter.png": "/marketplace/static/media/twitter.e4f83bef4191a65e9c7d.png",
+    "static/media/instagram.png": "/marketplace/static/media/instagram.56d3c2ef9b43e98875c0.png",
+    "static/media/github.png": "/marketplace/static/media/github.44eee0c4a6c25b0d7347.png",
+    "static/media/facebook.png": "/marketplace/static/media/facebook.b293d5363351752caf25.png",
+    "static/media/tik-tok.png": "/marketplace/static/media/tik-tok.8bb71cc6c1bd4e58530b.png",
+    "index.html": "/marketplace/index.html",
+    "main.5921e3dd.css.map": "/marketplace/static/css/main.5921e3dd.css.map",
+    "main.461c4f69.js.map": "/marketplace/static/js/main.461c4f69.js.map",
+    "453.d893c995.chunk.js.map": "/marketplace/static/js/453.d893c995.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5921e3dd.css",
+    "static/js/main.461c4f69.js"
+  ]
+}
