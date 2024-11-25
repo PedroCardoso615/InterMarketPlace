@@ -25,7 +25,7 @@ export const Listing = () => {
       !newProductCategory ||
       !newProductImg
     ) {
-      setConfirmationMessage("Please fill all fields.");
+      setConfirmationMessage("You need to fill all the fields.");
       setIsSuccess(false);
 
       setTimeout(() => {
@@ -72,7 +72,7 @@ export const Listing = () => {
         setIsSuccess(false);
       }, 3000);
     } catch (err) {
-      setConfirmationMessage("Error listing the product.");
+      setConfirmationMessage("Error listing the product. Please Login.");
       setIsSuccess(false);
       console.log(err);
 

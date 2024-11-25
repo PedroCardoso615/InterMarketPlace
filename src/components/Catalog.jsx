@@ -89,7 +89,7 @@ export const Catalog = () => {
         setIsSuccess(false);
       }, 3000);
     } catch (error) {
-      setConfirmationMessage("Error adding to the cart.");
+      setConfirmationMessage("Error adding to the cart. Please Login.");
       setIsSuccess(false);
 
       setTimeout(() => {
