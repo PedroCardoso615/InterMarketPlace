@@ -65,9 +65,7 @@ export const Profile = () => {
             console.error("Failed fetching user data:", err);
             setError("Failed to load user data");
           }
-        } else {
-          navigate("/login");
-        }
+        } 
         setLoading(false);
       });
     };

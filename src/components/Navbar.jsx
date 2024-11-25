@@ -24,7 +24,7 @@ export const Navbar = () => {
     if (user) {
       navigate("/profile"); // Redirect to profile if user is logged in.
     } else {
-      navigate("/login"); // Redirect to login if no user is logged in.
+      navigate("/signup"); // Redirect to login if no user is logged in.
     }
   };
 
